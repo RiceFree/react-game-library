@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 export default function GenresDropdown() {
     const [genres, setGenres] = useState([]);
@@ -29,7 +30,11 @@ export default function GenresDropdown() {
             <details>
                 <summary>Generi</summary>
                 <ul>
-                  {genres && genres.results && genres.results.map((genre) => <li key={'genre'+genre.id}><a>{genre.name}</a></li>)}    
+                    {genres && genres.results && genres.results.map((genre) => (
+                        <li key={genre.id}>
+                            <Link to={`/games/${genre.slug}`}>{genre.name}</Link>
+                        </li>
+                    ))}    
                 </ul>
             </details>
         </>
