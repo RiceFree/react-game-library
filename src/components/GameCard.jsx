@@ -27,7 +27,7 @@ export default function GameCard({ game }) {
                 <div className="card-actions justify-end">
                     <button className="btn btn-primary">
                         <Link to={`/games/${game.slug}/${game.id}`}>
-                            Vedi
+                            Dettaglio
                         </Link>
                     </button>
                 </div>

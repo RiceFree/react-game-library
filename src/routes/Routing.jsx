@@ -8,6 +8,7 @@ import SearchPage from "../pages/searchpage";
 import Register from "../pages/register";
 import Login from "../pages/login";
 import AccountPage from "../pages/account";
+import Profile from "../pages/profile";
 
 export default function Routing() {
     return (
@@ -20,7 +21,8 @@ export default function Routing() {
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/registrati" element={<Register />}/>
                     <Route path="/accedi" element={<Login />}/>
-                    <Route path="/profilo" element={<AccountPage />}/>
+                    <Route path="/account" element={<AccountPage />}/>
+                    <Route path="/profilo" element={<Profile />}/>
                     <Route path="*" element={<ErrorPage />} />
                 </Route>
             </Routes>

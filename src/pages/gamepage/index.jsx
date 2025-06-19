@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router"
 import useFetchSolution from "../../hook/useFetchSolution";
+import ToggleFavorite from "../../components/ToggleFavorite";
 
 export default function GamePage() {
     const { id } = useParams()
@@ -11,6 +12,7 @@ export default function GamePage() {
     return (
         <>
             <h1 className="text-6xl mb-6 font-jersey">{data && data.name}</h1>
+            <ToggleFavorite data={data} />
         </>
     )
 }

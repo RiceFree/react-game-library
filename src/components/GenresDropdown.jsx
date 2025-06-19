@@ -8,7 +8,7 @@ export default function GenresDropdown() {
 
     return (
         <>
-            <details>
+            <details open>
                 <summary>Generi</summary>
                 <ul>
                     {genres && genres.results && genres.results.map((genre) => (
