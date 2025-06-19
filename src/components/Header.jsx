@@ -1,12 +1,45 @@
 import { Link, useNavigate } from "react-router";
 import Searchbar from "./Searchbar";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import supabase from "../supabase/supabase-client";
 import SessionContext from "../context/SessionContext";
 
 export default function Header() {
     const navigate = useNavigate();
     const { session } = useContext(SessionContext)
+    const [ avatar_url, setAvatarUrl ] = useState(null);
+
+     useEffect(() => {
+        const getAvatar = async () => {
+            const { user } = session
+
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('avatar_url')
+                .eq('id', user.id)
+                .single()
+
+            if (error) {
+                console.warn(error)
+            } else if (data) {
+                const path =data.avatar_url;
+                 try {
+                    const { data, error } = await supabase.storage.from('avatars').download(path)
+                    if (error) {
+                        throw error
+                }
+                const url = URL.createObjectURL(data)
+                setAvatarUrl(url)
+                } catch (error) {
+                    console.log('Error downloading image: ', error.message)
+                }
+            }
+        }
+
+        getAvatar()
+
+    }, [session])
+    
 
     const signOut = async () => {
         const { error } = await supabase.auth.signOut()
@@ -29,21 +62,19 @@ export default function Header() {
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
-                                <img
-                                    alt="Tailwind CSS Navbar component"
-                                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                    {avatar_url ? (
+                                        <img src={avatar_url} />
+                                    ) : (
+                                        <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
+                                    )}
+                                
                                 </div>
                             </div>
                             <ul
                                 tabIndex={0}
                                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                                <li>
-                                <a className="justify-between">
-                                    Profile
-                                    <span className="badge">New</span>
-                                </a>
-                                </li>
-                                <li><a>Settings</a></li>
+                                <li>Ciao, {session?.user.user_metadata.first_name}!</li>
+                                <li><Link to={`/profilo`}>Profilo</Link></li>
                                 <li><button onClick={signOut}>Logout</button></li>
                             </ul>
                         </div>

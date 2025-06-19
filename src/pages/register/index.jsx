@@ -144,7 +144,7 @@ export default function Register() {
             />
             {formErrors.password && <small className="text-sm text-error">{formErrors.password}</small>}
 
-            <button className="btn btn-neutral mt-4">Registrati</button>
+            <button type="submit" className="btn btn-neutral mt-4">Registrati</button>
             </fieldset>
         </form>
     )
