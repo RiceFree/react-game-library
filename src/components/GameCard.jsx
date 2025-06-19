@@ -2,6 +2,11 @@ import { Link } from "react-router";
 import LazyLoadGameImage from "./LazyLoadGameImage";
 
 export default function GameCard({ game }) {
+    const currentdate = new Date();
+    const threeMonthsAgo = new Date(currentdate.setMonth(currentdate.getMonth()-3));
+    const isNew = threeMonthsAgo < new Date(game.released);
+    const futureRelease = currentdate < new Date(game.released)
+    
     return (
         <div className="card bg-base-300 shadow-lg">
             <figure className="md:h-30 2xl:h-40">
@@ -10,9 +15,10 @@ export default function GameCard({ game }) {
             <div className="card-body">
                 <h2 className="card-title">
                     {game.name}
-                    <div className="badge badge-secondary">NEW</div>
+                    {futureRelease ? <div className="badge badge-secondary uppercase">soon</div> :
+                    isNew && <div className="badge badge-secondary uppercase">new</div>}
                 </h2>
-                <p>{game.released}</p>
+                <p>{new Date(game.released).toLocaleString('it-IT', {year: "numeric", month: "long", day: "numeric",})}</p>
                 <div className="card-actions justify-end">
                     {
                         game.genres.map((genre) => <div key={game.name+genre.id} className="badge badge-outline">{genre.name}</div>)

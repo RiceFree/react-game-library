@@ -11,7 +11,7 @@ export default function GenrePage() {
 
     return (
         <>
-            <h1 className="text-6xl mb-6 font-pixelify">Genere: {genre}</h1>
+            <h1 className="text-6xl mb-6 font-jersey">Genere: {genre}</h1>
              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                 {error && <div>{error}</div>}
                 {data && data.results.map((game, key) => <GameCard key={key} game={game} />)}

@@ -10,7 +10,7 @@ export default function GamePage() {
 
     return (
         <>
-            <h1 className="text-6xl mb-6 font-pixelify">{data && data.name}</h1>
+            <h1 className="text-6xl mb-6 font-jersey">{data && data.name}</h1>
         </>
     )
 }
