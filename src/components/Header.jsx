@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import Searchbar from "./Searchbar";
 
 export default function Header() {
     return (
@@ -10,7 +11,8 @@ export default function Header() {
                 <Link to={`/`} className="hidden lg:inline btn btn-ghost text-xl font-pixelify">React Game Library</Link>
             </div>
             <div className="flex gap-2">
-                <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+                {/* <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" /> */}
+                <Searchbar />
                 <a className="btn">Accedi</a>
                 <a className="btn">Registrati</a>
                 {/* <div className="dropdown dropdown-end">
