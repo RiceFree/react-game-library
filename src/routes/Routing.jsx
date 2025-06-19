@@ -5,6 +5,8 @@ import ErrorPage from "../pages/error";
 import GenrePage from "../pages/genrepage";
 import GamePage from "../pages/gamepage";
 import SearchPage from "../pages/searchpage";
+import Register from "../pages/register";
+import Login from "../pages/login";
 
 export default function Routing() {
     return (
@@ -15,6 +17,8 @@ export default function Routing() {
                     <Route path="/games/:genre" element={<GenrePage />} />
                     <Route path="/games/:slug/:id" element={<GamePage />} />
                     <Route path="/search" element={<SearchPage />} />
+                    <Route path="/registrati" element={<Register />}/>
+                    <Route path="/accedi" element={<Login />}/>
                     <Route path="*" element={<ErrorPage />} />
                 </Route>
             </Routes>
