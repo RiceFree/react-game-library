@@ -1,31 +1,19 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Searchbar from "./Searchbar";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import supabase from "../supabase/supabase-client";
+import SessionContext from "../context/SessionContext";
 
 export default function Header() {
-    const [ session, setSession ] = useState(null);
-
-    const getSession = async () => {
-        const { data, error } = await supabase.auth.getSession()
-        if (error) console.log(error)
-        if (data.session) {
-            setSession(data)
-        } else {
-            setSession(null)
-        }
-    }
+    const navigate = useNavigate();
+    const { session } = useContext(SessionContext)
 
     const signOut = async () => {
         const { error } = await supabase.auth.signOut()
         if (error) console.log(error)
-        alert("Signout")
-        getSession();
+        navigate(`/`);
     }
 
-    useEffect(() => {
-        getSession()
-    }, [])
     return (
         <div className="navbar bg-base-100 shadow-sm">
             <div className="flex-1">

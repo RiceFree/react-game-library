@@ -15,7 +15,7 @@ export default function GameCard({ game }) {
             <div className="card-body">
                 <h2 className="card-title">
                     {game.name}
-                    {futureRelease && <div className="badge badge-warning uppercase">prossimamente</div>}
+                    {futureRelease && <div className="badge badge-warning uppercase">presto</div>}
                     {isNew && <div className="badge badge-success uppercase">nuovo</div>}
                 </h2>
                 <p>{new Date(game.released).toLocaleString('it-IT', {year: "numeric", month: "long", day: "numeric",})}</p>
