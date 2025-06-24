@@ -7,25 +7,28 @@ export default function FavoritesProvider({ children }) {
     const { session } = useContext(SessionContext)
     const [ favorites, setFavorites ] = useState([]);
 
+    const userId = session?.user.id;
+
     const getFavorites = useCallback(async () => {
+        if (!userId) return;
         let { data: favourites, error } = await supabase
         .from("favorites")
         .select("*")
-        .eq("user_id", session?.user.id);
+        .eq("user_id", userId);
         if (error) {
         console.log(error);
         console.log("Errore in console");
         } else {
         setFavorites(favourites);
         }
-    }, [session]);
+    }, [userId]);
 
     const addFavorites = async (game) => {
         await supabase
         .from("favorites")
         .insert([
             {
-            user_id: session?.user.id,
+            user_id: userId,
             game_id: game.id,
             game_name: game.name,
             game_image: game.background_image,
@@ -41,17 +44,17 @@ export default function FavoritesProvider({ children }) {
             .from("favorites")
             .delete()
             .eq("game_id", gameId)
-            .eq("user_id", session?.user.id)
+            .eq("user_id", userId)
 
         getFavorites();
     };
 
     useEffect(() => {
-        if (session) {
+        if (!userId) return;
+            
         getFavorites()
-        }
         const favorites = supabase
-        .channel("favorites")
+            .channel("favorites")
             .on(
                 "postgres_changes",
                 { event: "*", schema: "public", table: "favorites" },
@@ -60,12 +63,12 @@ export default function FavoritesProvider({ children }) {
             .subscribe();
 
         return () => {
-        if (favorites) {
-            supabase.removeChannel(favorites);
-        }
-        favorites.unsubscribe();
+            if (favorites) {
+                supabase.removeChannel(favorites);
+            }
+            favorites.unsubscribe();
         };
-    }, [getFavorites, session]);
+    }, [getFavorites, userId]);
 
     return (
         <FavoritesContext.Provider value={{ 

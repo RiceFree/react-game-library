@@ -11,29 +11,35 @@ export default function Header() {
 
      useEffect(() => {
         const getAvatar = async () => {
-            const { user } = session
 
-            const { data, error } = await supabase
-                .from('profiles')
-                .select('avatar_url')
-                .eq('id', user.id)
-                .single()
+            const { user } = session || {};
 
-            if (error) {
-                console.warn(error)
-            } else if (data) {
-                const path =data.avatar_url;
-                 try {
-                    const { data, error } = await supabase.storage.from('avatars').download(path)
-                    if (error) {
-                        throw error
-                }
-                const url = URL.createObjectURL(data)
-                setAvatarUrl(url)
-                } catch (error) {
-                    console.log('Error downloading image: ', error.message)
+            if (user) {
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .select('avatar_url')
+                    .eq('id', user.id)
+                    .single()
+
+                if (error) {
+                    console.warn(error)
+                } else if (data) {
+                    const path =data.avatar_url;
+                    if (path) {
+                        try {
+                            const { data, error } = await supabase.storage.from('avatars').download(path)
+                            if (error) {
+                                throw error
+                        }
+                        const url = URL.createObjectURL(data)
+                        setAvatarUrl(url)
+                        } catch (error) {
+                            console.log('Error downloading image: ', error.message)
+                        }
+                    }
                 }
             }
+           
         }
 
         getAvatar()
@@ -63,7 +69,7 @@ export default function Header() {
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
                                     {avatar_url ? (
-                                        <img src={avatar_url} />
+                                        <img src={avatar_url && avatar_url} />
                                     ) : (
                                         <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
                                     )}
