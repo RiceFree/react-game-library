@@ -19,6 +19,16 @@ export default function SearchPage() {
         <h1 className="text-6xl mb-6 font-jersey">Risultati per: {game}</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             {error && <div>{error}</div>}
+            {loading && ([...Array(16)].map((e,i) => {
+                    return (
+                        <div key={'skel'+i} className="flex flex-col gap-4">
+                            <div className="skeleton h-42 w-full"></div>
+                            <div className="skeleton h-4 w-28"></div>
+                            <div className="skeleton h-4 w-full"></div>
+                            <div className="skeleton h-4 w-full"></div>
+                        </div>
+                    )}))
+                }
             {data && data.results.map((game, key) => <GameCard key={key} game={game} />)}
         </div>
         </>

@@ -56,7 +56,7 @@ export default function RealtimeChat({ data }) {
                     <div className="chat-header">
                         {message.profile_username}
                         <time className="text-xs opacity-50">
-                            {new Date(message.updated_at).toLocaleString('it-IT', {year: "numeric", month: "long", day: "numeric",})}
+                            {new Date(message.updated_at).toLocaleString('it-IT', {year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit"})}
                         </time>
                     </div>
                 <div className="chat-bubble">{ message.content }</div>

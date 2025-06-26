@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import LazyLoadGameImage from "./LazyLoadGameImage";
+import ToggleFavorite from "./ToggleFavorite";
 
 export default function GameCard({ game }) {
     const currentdate = new Date();
@@ -24,12 +25,12 @@ export default function GameCard({ game }) {
                         game.genres.map((genre) => <div key={game.name+genre.id} className="badge badge-outline">{genre.name}</div>)
                     }                    
                 </div>
-                <div className="card-actions justify-end">
-                    <button className="btn btn-primary">
-                        <Link to={`/games/${game.slug}/${game.id}`}>
-                            Dettaglio
-                        </Link>
-                    </button>
+                <div className="card-actions justify-between">
+                    <ToggleFavorite data={game && game} />
+
+                    <Link className="btn btn-primary" to={`/games/${game.slug}/${game.id}`}>
+                        Dettaglio
+                    </Link>
                 </div>
             </div>
         </div>
